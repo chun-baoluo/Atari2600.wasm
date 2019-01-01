@@ -1,0 +1,21 @@
+{
+  "name": "atari2600.wasm",
+  "version": "0.0.1",
+  "description": "Atari2600 webassembly emulator written in C++",
+  "scripts": {
+    "build": "node build.js",
+    "build:dev": "node build.js -d",
+    "build:prod": "node build.js",
+	"watch": "node build.js -w",
+    "watch:dev": "node build.js -d -w",
+    "watch:prod": "node build.js -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/star-collector/Atari2600.wasm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/star-collector/NES.wasm/issues"
+  },
+  "homepage": "https://github.com/star-collector/NES.wasm#readme"
+}
