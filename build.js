@@ -14,7 +14,7 @@ const cpp = [
 
 class Builder {
     constructor(cpp, debug, watch) {
-        this.command = `emcc -std=c++11 ${ cpp.join(' ') } -D DEBUG=${ debug } -s WASM=1 -s FORCE_FILESYSTEM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['ccall'] -s USE_SDL=2 -s ASSERTIONS=1 -s DISABLE_EXCEPTION_CATCHING=0 -O${debug ? '0' : '3'} -o ./output/nes.js --pre-js ./src/js/nes.js`;
+        this.command = `emcc -std=c++11 ${ cpp.join(' ') } -D DEBUG=${ debug } -s WASM=1 -s FORCE_FILESYSTEM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=['ccall'] -s USE_SDL=2 -s ASSERTIONS=1 -s DISABLE_EXCEPTION_CATCHING=0 -O${debug ? '0' : '3'} -o ./output/atari2600.js --pre-js ./src/js/atari2600.js`;
         this.isBuilding = false;
 
         console.log(this.command);

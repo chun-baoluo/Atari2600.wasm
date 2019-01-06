@@ -16,7 +16,7 @@ var Module = {
     }
 };
 
-var NES = (function() {
+var Atari2600 = (function() {
     return function(canvas, textarea) {
         Module.canvas = canvas;
         Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
