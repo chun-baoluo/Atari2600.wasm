@@ -34,12 +34,12 @@ std::vector<uint8_t> ROMReader::read()
 
 	file.insert(file.begin(), std::istream_iterator<uint8_t>(fileStream), std::istream_iterator<uint8_t>());
 
-	// while (file.size() < 0x8000) {
-	//  	file.insert(file.end(), file.begin() + 0x10, file.end());
-	// }
+	while (file.size() < 0x1000) {
+	 	file.insert(file.end(), file.begin(), file.end());
+	}
 
 	if (!this->verify(file)) {
-		printf("File is not a NES rom!\n");
+		printf("File is not a Atari 2600 rom!\n");
 		file.clear();
 	}
 

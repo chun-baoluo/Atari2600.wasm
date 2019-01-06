@@ -7,7 +7,9 @@ const cpp = [
 	"./src/Atari2600.cpp",
 	"./src/ROMReader.cpp",
 	"./src/CPU.cpp",
-	"./src/RAM.cpp"
+	"./src/RAM.cpp",
+    "./src/PIA.cpp",
+    "./src/TIA.cpp"
 ];
 
 class Builder {

@@ -26,15 +26,9 @@ extern "C"
 void mainloop(void *arg)
 {
     context *ctx = static_cast<context*>(arg);
-    SDL_Renderer *renderer = ctx->renderer;
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-
-    SDL_RenderPresent(renderer);
 
     if(atari->isReady()) {
-		atari->nextFrame();
+		atari->nextFrame(ctx->renderer);
     }
 
 }

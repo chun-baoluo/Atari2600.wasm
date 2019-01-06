@@ -5,17 +5,13 @@
 #include <vector>
 
 #include "CPU.h"
+#include "RAM.h"
 
-CPU::CPU(std::vector<uint8_t> rom)
+CPU::CPU(RAM*& memory)
 {
-    this->memory = new CPUMemory(0xFFFF, rom);
+	this->memory = memory;
 
 	this->resetVector();
-}
-
-CPU::CPUMemory::CPUMemory(uint16_t size, std::vector<uint8_t> rom) : RAM()
-{
-	this->map = rom;
 }
 
 int CPU::getFlag(char&& flag)
@@ -145,7 +141,7 @@ uint16_t CPU::ADDRZeropage()
 
 uint16_t CPU::ADDRZeropageX()
 {
-	return (this->memory->get(++this->PC) + this->X) & 0xFF;
+	return (ADDRZeropage() + this->X) & 0xFF;
 }
 
 void CPU::BIT(uint16_t address)
@@ -161,7 +157,8 @@ void CPU::CJMP(char&& flag, bool&& value)
 {
     if(this->getFlag(std::move(flag)) == value) {
         this->PC++;
-        this->cycle = 2;
+        setCycle(2);
+		return;
     };
 
     int8_t num = this->memory->get(ADDRImmediate());
