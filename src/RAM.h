@@ -3,12 +3,15 @@
 #include <stdint.h>
 #include <vector>
 
+class PIA;
+
 class RAM
 {
     public:
-		RAM(std::vector<uint8_t> rom);
+		RAM(std::vector<uint8_t> rom, PIA*& pia);
         uint8_t get(uint16_t address);
         void set(uint16_t address, uint8_t value);
-    protected:
+    private:
+		PIA* pia = nullptr;
         std::vector<uint8_t> map;
 };

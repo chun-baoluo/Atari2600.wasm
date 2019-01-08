@@ -1,0 +1,5 @@
+// INSTAT
+case 0x285: {
+	this->map[0x285] = this->map[0x285] & 0xBF;
+	break;
+}
