@@ -5,7 +5,7 @@
 #include "PIA.h"
 #include "RAM.h"
 
-RAM::RAM(std::vector<uint8_t> rom, PIA*& pia)
+RAM::RAM(std::vector<uint8_t> rom)
 {
 	std::vector<uint8_t> sliced(0xF000, 0x00);
 
@@ -16,7 +16,6 @@ RAM::RAM(std::vector<uint8_t> rom, PIA*& pia)
 	);
 
 	this->map = sliced;
-	this->pia = pia;
 }
 
 uint8_t RAM::get(uint16_t address)
@@ -33,4 +32,9 @@ void RAM::set(uint16_t address, uint8_t value)
 		#include "RAM_write.inc.cpp"
 	}
     this->map[address] = value;
+}
+
+void RAM::setPIA(PIA* pia)
+{
+	this->pia = pia;
 }

@@ -46,10 +46,17 @@ void Atari2600::start()
         return;
     }
 
-	this->ram = new RAM(rom, this->pia);
-    this->cpu = new CPU(this->ram);
-	this->pia = new PIA(this->ram);
-	this->tia = new TIA();
+    RAM* ram = new RAM(rom);
+    CPU* cpu = new CPU(ram);
+    PIA* pia = new PIA(ram);
+    TIA* tia = new TIA();
+
+    ram->setPIA(pia);
+
+	this->ram = ram;
+    this->cpu = cpu;
+	this->pia = pia;
+	this->tia = tia;
 
     this->reader->clear();
     this->romLoaded = true;

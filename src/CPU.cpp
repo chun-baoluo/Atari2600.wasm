@@ -7,7 +7,7 @@
 #include "CPU.h"
 #include "RAM.h"
 
-CPU::CPU(RAM*& memory)
+CPU::CPU(RAM* memory)
 {
 	this->memory = memory;
 
@@ -187,6 +187,22 @@ void CPU::DEX()
 	this->setFlag('N', this->X < 0);
 }
 
+void CPU::DEY()
+{
+	this->Y = (this->Y - 1) & 0xFF;
+
+	this->setFlag('Z', this->X == 0);
+	this->setFlag('N', this->X < 0);
+}
+
+void CPU::INX()
+{
+	this->X = (this->X + 1) & 0xFF;
+
+	this->setFlag('Z', this->X == 0);
+	this->setFlag('N', this->X < 0);
+}
+
 void CPU::JMP(uint16_t address)
 {
     this->PC = address - 1;
@@ -214,6 +230,16 @@ void CPU::LDX(uint16_t address)
     int8_t value = this->memory->get(address);
 
     this->X = value;
+
+    this->setFlag('Z', value == 0);
+    this->setFlag('N', value < 0);
+}
+
+void CPU::LDY(uint16_t address)
+{
+    int8_t value = this->memory->get(address);
+
+    this->Y = value;
 
     this->setFlag('Z', value == 0);
     this->setFlag('N', value < 0);

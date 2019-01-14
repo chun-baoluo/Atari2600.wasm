@@ -7,14 +7,13 @@
 class CPU
 {
     public:
-        CPU(RAM*& memory);
+        CPU(RAM* memory);
 
         int getFlag(char&& flag);
         void pulse();
         void setFlag(char&& flag, int value);
         void setCycle(int cycle);
         void setCycle(int cycle, uint16_t address, uint16_t addressWithOffset);
-
     private:
 		RAM* memory = nullptr;
 
@@ -40,10 +39,13 @@ class CPU
         void CJMP(char&& flag, bool&& value);
         void CMP(uint16_t address);
 		void DEX();
+		void DEY();
+		void INX();
         void JMP(uint16_t address);
         void JSR(uint16_t address);
         void LDA(uint16_t address);
         void LDX(uint16_t address);
+        void LDY(uint16_t address);
 		uint8_t POP();
         void PUSH(uint8_t value);
         void ROL(uint16_t address);

@@ -61,6 +61,18 @@ case 0x85: {
     setCycle(3);
     break;
 }
+// STX nn
+case 0x86: {
+    STX(ADDRZeropage());
+    setCycle(3);
+    break;
+}
+// DEY
+case 0x88: {
+	DEY();
+	setCycle(2);
+	break;
+}
 // STA nnnn
 case 0x8D: {
     STA(ADDRAbsolute());
@@ -78,6 +90,12 @@ case 0x95: {
 	STA(ADDRZeropageX());
 	setCycle(4);
 	break;
+}
+// LDY #nn
+case 0xA0: {
+    LDY(ADDRImmediate());
+    setCycle(2);
+    break;
 }
 // LDX #nn
 case 0xA2: {
@@ -135,6 +153,12 @@ case 0xD0: {
 // CLD
 case 0xD8: {
     setFlag('D', 0);
+    setCycle(2);
+    break;
+}
+// INX
+case 0xE8: {
+    INX();
     setCycle(2);
     break;
 }
