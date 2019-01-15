@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "PIA.h"
-#include "RAM.h"
+#include "PIA.hpp"
+#include "RAM.hpp"
 
 PIA::PIA(RAM* memory)
 {

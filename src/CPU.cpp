@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <vector>
 
-#include "CPU.h"
-#include "RAM.h"
+#include "CPU.hpp"
+#include "RAM.hpp"
 
 CPU::CPU(RAM* memory)
 {
@@ -48,6 +48,11 @@ int CPU::getFlag(char&& flag)
     return (this->P & (1 << offset)) > 0 ? 1 : 0;
 }
 
+void CPU::lock()
+{
+    this->active = false;
+}
+
 void CPU::resetVector()
 {
 	uint8_t low = this->memory->get(0xFFFC);
@@ -57,12 +62,15 @@ void CPU::resetVector()
 
 void CPU::pulse()
 {
-    if(!this->cycle) {
-        if(DEBUG) {
+    if (!this->active) {
+        return;
+    }
+    if (!this->cycle) {
+        if (DEBUG) {
             printf("OPCODE: 0x%02X; ADRESS: 0x%04X;\n", this->memory->get(this->PC), this->PC);
         }
 
-        switch(this->memory->get(this->PC)) {
+        switch (this->memory->get(this->PC)) {
             #include "CPU.inc.cpp"
         }
 
@@ -114,6 +122,11 @@ void CPU::setCycle(int cycle)
 void CPU::setCycle(int cycle, uint16_t address, uint16_t addressWithOffset)
 {
     this->cycle = cycle + (address >> 0x08 % 0xFF != addressWithOffset >> 0x08 % 0xFF);
+}
+
+void CPU::unlock()
+{
+    this->active = true;
 }
 
 uint16_t CPU::ADDRAbsolute()

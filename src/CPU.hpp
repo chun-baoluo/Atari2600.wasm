@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "RAM.h"
+#include "RAM.hpp"
 
 class CPU
 {
@@ -10,13 +10,16 @@ class CPU
         CPU(RAM* memory);
 
         int getFlag(char&& flag);
+        void lock();
         void pulse();
         void setFlag(char&& flag, int value);
         void setCycle(int cycle);
         void setCycle(int cycle, uint16_t address, uint16_t addressWithOffset);
+        void unlock();
     private:
 		RAM* memory = nullptr;
 
+		bool active = true;
         uint8_t cycle = 0;
 
         uint8_t* rom = nullptr;

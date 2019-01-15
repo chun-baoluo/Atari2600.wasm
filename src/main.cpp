@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <emscripten.h>
 
-#include "Atari2600.h"
+#include "Atari2600.hpp"
 
 Atari2600* atari = new Atari2600();
 
@@ -27,7 +27,7 @@ void mainloop(void *arg)
 {
     context *ctx = static_cast<context*>(arg);
 
-    if(atari->isReady()) {
+    if (atari->isReady()) {
 		atari->nextFrame(ctx->renderer);
     }
 
@@ -40,7 +40,7 @@ int main()
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window;
     SDL_Renderer *renderer;
-    SDL_CreateWindowAndRenderer(341, 262, 0, &window, &renderer);
+    SDL_CreateWindowAndRenderer(222, 160, 0, &window, &renderer);
 
     ctx.renderer = renderer;
 

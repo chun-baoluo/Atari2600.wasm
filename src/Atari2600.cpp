@@ -1,11 +1,11 @@
 #include <stdint.h>
 
-#include "Atari2600.h"
-#include "CPU.h"
-#include "PIA.h"
-#include "RAM.h"
-#include "ROMReader.h"
-#include "TIA.h"
+#include "Atari2600.hpp"
+#include "CPU.hpp"
+#include "PIA.hpp"
+#include "RAM.hpp"
+#include "ROMReader.hpp"
+#include "TIA.hpp"
 
 Atari2600::Atari2600()
 {
@@ -17,32 +17,43 @@ bool Atari2600::isReady()
     return this->romLoaded;
 }
 
-void Atari2600::nextFrame(SDL_Renderer *renderer)
+void Atari2600::nextFrame(SDL_Renderer* renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 	SDL_RenderClear(renderer);
-
-	SDL_RenderPresent(renderer);
-    for(int scanline = 0; scanline <= 262; scanline++) {
-        this->nextScanline(scanline);
+    for (int scanline = 0; scanline <= 262; ++scanline) {
+        this->nextScanline(scanline, renderer, scanline > 30 && scanline < 252);
     }
+    SDL_RenderPresent(renderer);
 }
 
-void Atari2600::nextScanline(int scanline)
+void Atari2600::nextScanline(int scanline, SDL_Renderer* renderer, bool draw)
 {
-	auto color = TIA::Colors::NTSC[this->ram->get(0x09)];
-	// printf("COLORBK: 0x%04X\n", color);
-    for(int clock = 0; clock < 228; clock += 3) {
+	int color = TIA::Colors::NTSC[this->ram->get(0x09)];
+
+	for (int clock = 0; clock < 68; clock += 3) {
+        this->pia->tick();
+    	this->cpu->pulse();
+    }
+
+    for (int clock = 68; clock < 228; clock += 3) {
 		this->pia->tick();
 		this->cpu->pulse();
+		if (draw) {
+			SDL_SetRenderDrawColor(renderer, color >> (0x08 * 2), color >> 0x08 & 0xFF, color & 0xFF, 255);
+        	SDL_RenderDrawPoint(renderer, clock, scanline);
+        	SDL_RenderDrawPoint(renderer, clock + 1, scanline);
+            SDL_RenderDrawPoint(renderer, clock + 2, scanline);
+		}
     }
+
+    this->cpu->unlock();
 }
 
 void Atari2600::start()
 {
 	std::vector<uint8_t> rom = this->reader->read();
 
-    if(rom.empty()) {
+    if (rom.empty()) {
         return;
     }
 
@@ -51,7 +62,7 @@ void Atari2600::start()
     PIA* pia = new PIA(ram);
     TIA* tia = new TIA();
 
-    ram->setPIA(pia);
+    ram->setComponents(cpu, pia);
 
 	this->ram = ram;
     this->cpu = cpu;

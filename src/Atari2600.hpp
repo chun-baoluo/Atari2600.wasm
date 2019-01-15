@@ -2,17 +2,17 @@
 
 #include <SDL2/SDL.h>
 
-#include "CPU.h"
-#include "PIA.h"
-#include "RAM.h"
-#include "ROMReader.h"
-#include "TIA.h"
+#include "CPU.hpp"
+#include "PIA.hpp"
+#include "RAM.hpp"
+#include "ROMReader.hpp"
+#include "TIA.hpp"
 
 class Atari2600 {
     public:
         Atari2600();
         bool isReady();
-        void nextFrame(SDL_Renderer *renderer);
+        void nextFrame(SDL_Renderer* renderer);
         void start();
         void stop();
     private:
@@ -23,5 +23,5 @@ class Atari2600 {
 		TIA* tia = nullptr;
         bool romLoaded = false;
 
-        void nextScanline(int scanline);
+        void nextScanline(int scanline, SDL_Renderer* renderer, bool draw);
 };

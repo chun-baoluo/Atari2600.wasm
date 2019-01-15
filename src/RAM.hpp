@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <vector>
 
+class CPU;
 class PIA;
 
 class RAM
@@ -11,8 +12,9 @@ class RAM
 		RAM(std::vector<uint8_t> rom);
         uint8_t get(uint16_t address);
         void set(uint16_t address, uint8_t value);
-        void setPIA(PIA* pia);
+        void setComponents(CPU* cpu, PIA* pia);
     private:
+        CPU* cpu = nullptr;
 		PIA* pia = nullptr;
         std::vector<uint8_t> map;
 };

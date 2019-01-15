@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <vector>
 
-#include "ROMReader.h"
+#include "ROMReader.hpp"
 
 bool ROMReader::clear()
 {

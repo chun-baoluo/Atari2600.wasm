@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <vector>
 
-#include "PIA.h"
-#include "RAM.h"
+#include "CPU.hpp"
+#include "PIA.hpp"
+#include "RAM.hpp"
 
 RAM::RAM(std::vector<uint8_t> rom)
 {
@@ -23,6 +24,7 @@ uint8_t RAM::get(uint16_t address)
 	switch (address) {
 		#include "RAM_read.inc.cpp"
 	}
+
     return this->map[address];
 }
 
@@ -31,10 +33,12 @@ void RAM::set(uint16_t address, uint8_t value)
 	switch (address) {
 		#include "RAM_write.inc.cpp"
 	}
+
     this->map[address] = value;
 }
 
-void RAM::setPIA(PIA* pia)
+void RAM::setComponents(CPU* cpu, PIA* pia)
 {
+    this->cpu = cpu;
 	this->pia = pia;
 }

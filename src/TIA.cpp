@@ -1,4 +1,4 @@
-#include "TIA.h"
+#include "TIA.hpp"
 
 std::map<int, int> TIA::Colors::NTSC = {
 		{ 0x00, 0x000000 },

@@ -1,3 +1,8 @@
+// WSYNC
+case 0x02: {
+    this->cpu->lock();
+    break;
+}
 // TIM1T
 case 0x294: {
 	this->pia->setCycle(1);
