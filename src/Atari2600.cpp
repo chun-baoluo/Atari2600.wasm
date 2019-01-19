@@ -40,9 +40,9 @@ void Atari2600::nextScanline(int scanline, SDL_Renderer* renderer, bool draw)
 		this->cpu->pulse();
 		if (draw) {
 			SDL_SetRenderDrawColor(renderer, color >> (0x08 * 2), color >> 0x08 & 0xFF, color & 0xFF, 255);
-        	SDL_RenderDrawPoint(renderer, clock, scanline);
-        	SDL_RenderDrawPoint(renderer, clock + 1, scanline);
-            SDL_RenderDrawPoint(renderer, clock + 2, scanline);
+        	SDL_RenderDrawPoint(renderer, clock - 68, scanline - 30);
+        	SDL_RenderDrawPoint(renderer, clock - 68 + 1, scanline - 30);
+            SDL_RenderDrawPoint(renderer, clock - 68 + 2, scanline - 30);
 		}
     }
 

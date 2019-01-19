@@ -40,7 +40,7 @@ int main()
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window;
     SDL_Renderer *renderer;
-    SDL_CreateWindowAndRenderer(222, 160, 0, &window, &renderer);
+    SDL_CreateWindowAndRenderer(160, 222, 0, &window, &renderer);
 
     ctx.renderer = renderer;
 
