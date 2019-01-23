@@ -156,9 +156,20 @@ case 0xD8: {
     setCycle(2);
     break;
 }
+// INC nn
+case 0xE6: {
+    INC(ADDRZeropage());
+    setCycle(5);
+    break;
+}
 // INX
 case 0xE8: {
     INX();
+    setCycle(2);
+    break;
+}
+// NOP
+case 0xEA: {
     setCycle(2);
     break;
 }

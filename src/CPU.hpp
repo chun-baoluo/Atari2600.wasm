@@ -43,6 +43,7 @@ class CPU
         void CMP(uint16_t address);
 		void DEX();
 		void DEY();
+		void INC(uint16_t address);
 		void INX();
         void JMP(uint16_t address);
         void JSR(uint16_t address);

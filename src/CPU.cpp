@@ -208,6 +208,16 @@ void CPU::DEY()
 	this->setFlag('N', this->X < 0);
 }
 
+void CPU::INC(uint16_t address)
+{
+    uint8_t result = this->memory->get(address) + 1;
+
+    this->memory->set(address, result);
+
+    this->setFlag('Z', result == 0);
+    this->setFlag('N', result < 0);
+}
+
 void CPU::INX()
 {
 	this->X = (this->X + 1) & 0xFF;
