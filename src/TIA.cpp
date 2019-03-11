@@ -145,3 +145,27 @@ std::map<int, int> TIA::Colors::NTSC = {
 		{ 0xFC, 0xFEB439 },
 		{ 0xFE, 0xFEDF70 },
 };
+
+TIA::TIA(RAM* ram)
+{
+	this->ram = ram;
+}
+
+void TIA::draw(SDL_Renderer* renderer, short int clock, short int scanline)
+{
+   int color = TIA::Colors::NTSC[this->ram->get(0x09)];
+   SDL_SetRenderDrawColor(renderer, color >> (0x08 * 2), color >> 0x08 & 0xFF, color & 0xFF, 255);
+   SDL_RenderDrawPoint(renderer, clock - 68, scanline - 30);
+   SDL_RenderDrawPoint(renderer, clock - 68 + 1, scanline - 30);
+   SDL_RenderDrawPoint(renderer, clock - 68 + 2, scanline - 30);
+}
+
+bool TIA::getVsync()
+{
+    return this->vsync;
+}
+
+void TIA::setVsync(bool vsync)
+{
+    this->vsync = vsync;
+}

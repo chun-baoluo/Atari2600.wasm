@@ -1,8 +1,6 @@
 // VSYNC
 case 0x00: {
-	if (!(this->map[0x00] & 0x02) && (value & 0x02)) {
-
-	}
+    this->tia->setVsync(value & 0x02);
 	break;
 }
 // WSYNC

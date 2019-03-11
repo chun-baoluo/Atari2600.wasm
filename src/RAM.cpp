@@ -5,6 +5,7 @@
 #include "CPU.hpp"
 #include "PIA.hpp"
 #include "RAM.hpp"
+#include "TIA.hpp"
 
 RAM::RAM(std::vector<uint8_t> rom)
 {
@@ -37,8 +38,9 @@ void RAM::set(uint16_t address, uint8_t value)
     this->map[address] = value;
 }
 
-void RAM::setComponents(CPU* cpu, PIA* pia)
+void RAM::setComponents(CPU* cpu, PIA* pia, TIA* tia)
 {
     this->cpu = cpu;
 	this->pia = pia;
+	this->tia = tia;
 }

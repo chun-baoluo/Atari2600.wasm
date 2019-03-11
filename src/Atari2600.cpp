@@ -21,15 +21,16 @@ void Atari2600::nextFrame(SDL_Renderer* renderer)
 {
 	SDL_RenderClear(renderer);
     for (int scanline = 0; scanline <= 262; ++scanline) {
+        if (this->tia->getVsync()) break;
         this->nextScanline(scanline, renderer, scanline > 30 && scanline < 252);
+        this->cpu->unlock();
     }
+    this->tia->setVsync(false);
     SDL_RenderPresent(renderer);
 }
 
-void Atari2600::nextScanline(int scanline, SDL_Renderer* renderer, bool draw)
+void Atari2600::nextScanline(short int scanline, SDL_Renderer* renderer, bool draw)
 {
-	int color = TIA::Colors::NTSC[this->ram->get(0x09)];
-
 	for (int clock = 0; clock < 68; clock += 3) {
         this->pia->tick();
     	this->cpu->pulse();
@@ -39,14 +40,9 @@ void Atari2600::nextScanline(int scanline, SDL_Renderer* renderer, bool draw)
 		this->pia->tick();
 		this->cpu->pulse();
 		if (draw) {
-			SDL_SetRenderDrawColor(renderer, color >> (0x08 * 2), color >> 0x08 & 0xFF, color & 0xFF, 255);
-        	SDL_RenderDrawPoint(renderer, clock - 68, scanline - 30);
-        	SDL_RenderDrawPoint(renderer, clock - 68 + 1, scanline - 30);
-            SDL_RenderDrawPoint(renderer, clock - 68 + 2, scanline - 30);
+			this->tia->draw(renderer, clock, scanline);
 		}
     }
-
-    this->cpu->unlock();
 }
 
 void Atari2600::start()
@@ -60,9 +56,9 @@ void Atari2600::start()
     RAM* ram = new RAM(rom);
     CPU* cpu = new CPU(ram);
     PIA* pia = new PIA(ram);
-    TIA* tia = new TIA();
+    TIA* tia = new TIA(ram);
 
-    ram->setComponents(cpu, pia);
+    ram->setComponents(cpu, pia, tia);
 
 	this->ram = ram;
     this->cpu = cpu;
