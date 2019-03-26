@@ -23,5 +23,5 @@ class Atari2600 {
 		TIA* tia = nullptr;
         bool romLoaded = false;
 
-        void nextScanline(short int scanline, SDL_Renderer* renderer, bool draw);
+        void nextScanline(SDL_Renderer* renderer, short int scanline, bool draw);
 };

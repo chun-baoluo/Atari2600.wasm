@@ -20,18 +20,18 @@ bool Atari2600::isReady()
 void Atari2600::nextFrame(SDL_Renderer* renderer)
 {
 	SDL_RenderClear(renderer);
-    for (int scanline = 0; scanline <= 262; ++scanline) {
+	this->tia->setVsync(false);
+    for (int scanline = 0; scanline < 262; ++scanline) {
         if (this->tia->getVsync()) break;
-        this->nextScanline(scanline, renderer, scanline > 30 && scanline < 252);
+        this->nextScanline(renderer, scanline, scanline > 30 && scanline < 252);
         this->cpu->unlock();
     }
-    this->tia->setVsync(false);
     SDL_RenderPresent(renderer);
 }
 
-void Atari2600::nextScanline(short int scanline, SDL_Renderer* renderer, bool draw)
+void Atari2600::nextScanline(SDL_Renderer* renderer, short int scanline, bool draw)
 {
-	for (int clock = 0; clock < 68; clock += 3) {
+	for (int clock = 3; clock < 68; clock += 3) {
         this->pia->tick();
     	this->cpu->pulse();
     }
@@ -40,7 +40,7 @@ void Atari2600::nextScanline(short int scanline, SDL_Renderer* renderer, bool dr
 		this->pia->tick();
 		this->cpu->pulse();
 		if (draw) {
-			this->tia->draw(renderer, clock, scanline);
+			this->tia->draw(renderer, clock - 68, scanline - 30);
 		}
     }
 }

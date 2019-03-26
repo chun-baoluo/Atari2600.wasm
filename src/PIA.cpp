@@ -16,8 +16,8 @@ void PIA::setCycle(short int&& value)
 	this->currentInterval = value;
 }
 
-void PIA::tick()
-{
+void PIA::tick() {
+
 	if (this->lastInterval < 0) {
 		return;
 	}
@@ -35,5 +35,5 @@ void PIA::tick()
 		}
 	}
 
-	this->currentInterval--;
+	--this->currentInterval;
 }
